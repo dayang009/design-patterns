@@ -19,7 +19,7 @@ import java.util.Date;
  * 同样，第三方登录（Gitee登录）也不需要实现默认的 login 和 register 方法，后续优化
  */
 @Component
-public class RegisterLoginByGitee implements RegisterLoginFuncInterface {
+public class RegisterLoginByGitee extends AbstractRegisterLoginFunc implements RegisterLoginFuncInterface {
 
 	@Value("${gitee.state}")
 	private String giteeState;
