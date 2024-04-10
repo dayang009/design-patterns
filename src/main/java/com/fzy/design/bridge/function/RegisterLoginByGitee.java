@@ -1,23 +1,15 @@
 package com.fzy.design.bridge.function;
 
 import com.fzy.design.pojo.UserInfo;
-import com.fzy.design.repo.UserRepository;
 import com.fzy.design.utils.HttpClientUtils;
 import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
-/**
- * 当前设计略有瑕疵，默认登录不需要实现第三方登录的方法
- * <p>
- * </p>
- * 同样，第三方登录（Gitee登录）也不需要实现默认的 login 和 register 方法，后续优化
- */
 @Component
 public class RegisterLoginByGitee extends AbstractRegisterLoginFunc implements RegisterLoginFuncInterface {
 
@@ -32,34 +24,6 @@ public class RegisterLoginByGitee extends AbstractRegisterLoginFunc implements R
 
 	@Value("${gitee.user.prefix}")
 	private String giteeUserPrefix;
-
-	@Resource
-	private UserRepository userRepository;
-
-	@Override
-	public String login(String account, String password) {
-		UserInfo userInfo = userRepository.findByUserNameAndUserPassword(account, password);
-		if (userInfo == null) {
-			return "account / password ERROR!";
-		}
-		return "Login Success";
-	}
-
-	@Override
-	public String register(UserInfo userInfo) {
-		if (checkUserExists(userInfo.getUserName())) {
-			throw new RuntimeException("User already registered.");
-		}
-		userInfo.setCreateDate(new Date());
-		userRepository.save(userInfo);
-		return "Register Success!";
-	}
-
-	@Override
-	public boolean checkUserExists(String userName) {
-		UserInfo user = userRepository.findByUserName(userName);
-		return user != null;
-	}
 
 	/**
 	 * 第三方账户登录接口，代码实现功能直接复制过来
