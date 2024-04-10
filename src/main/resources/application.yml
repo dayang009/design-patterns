@@ -22,6 +22,24 @@ spring:
     hibernate:
       ddl-auto: update
 
+
+gitee:
+  clientId: 9fe4d3adcb0f6021dd52bcf7e0a1090a31c6a59d95fc85f0465878930723215b
+  clientSecret: cbe5bcc58e97b267e40fbcf61cd32cd0c4485330c028a15fba7f9808d9501c41
+  # Gitee 对应的 CallBack 接口
+  callBack: http://localhost:8081/gitee
+  # 与 UI 前端协商的 state 值
+  state: GITEE
+  user:
+    # Gitee 用户登录时，进行“自动注册”时，添加用户名前缀，以便区分平台
+    prefix: ${gitee.state}@
+    url: https://gitee.com/api/v5/user?access_token=
+  token:
+    url: https://gitee.com/oauth/token?grant_type=authorization_code&client_id=${gitee.clientId}&client_secret=${gitee.clientSecret}&redirect_uri=${gitee.callBack}&code=
+
+
+
+
 logging:
   level:
     web: debug

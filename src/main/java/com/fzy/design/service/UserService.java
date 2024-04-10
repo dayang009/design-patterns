@@ -2,15 +2,15 @@ package com.fzy.design.service;
 
 import com.fzy.design.pojo.UserInfo;
 import com.fzy.design.repo.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Date;
 
 @Service
 public class UserService {
 
-	@Autowired
+	@Resource
 	private UserRepository userRepository;
 
 	public String login(String account, String password) {
@@ -32,10 +32,7 @@ public class UserService {
 
 	public boolean checkUserExists(String userName) {
 		UserInfo user = userRepository.findByUserName(userName);
-		if (user == null) {
-			return false;
-		}
-		return true;
+		return user != null;
 	}
 
 }
