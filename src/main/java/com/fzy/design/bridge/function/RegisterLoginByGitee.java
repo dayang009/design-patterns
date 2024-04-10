@@ -1,5 +1,6 @@
 package com.fzy.design.bridge.function;
 
+import com.fzy.design.bridge.abst.factory.RegisterLoginComponentFactory;
 import com.fzy.design.pojo.UserInfo;
 import com.fzy.design.utils.HttpClientUtils;
 import com.google.gson.JsonObject;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
@@ -72,6 +74,11 @@ public class RegisterLoginByGitee extends AbstractRegisterLoginFunc implements R
 		this.register(userInfo);
 		// 自动注册完成后，进行登录
 		return this.login(userName, password);
+	}
+
+	@PostConstruct
+	private void initFuncMap() {
+		RegisterLoginComponentFactory.funcMap.put("Gitee", this);
 	}
 
 }
